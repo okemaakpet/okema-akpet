@@ -1,0 +1,205 @@
+OTUMALA RONALDO DESTINY
+2101105/21CD008341
+CSC312 
+
+
+
+
+
+No1.
+a. 8 2+3*16 4/-=
+8+2*3-16/4
+=10
+
+b. 12 25 5 1//*8 7+-=
+12*25/5/1-8+7
+=59
+
+c. 70 14 4 5 15 3/* - -/6+=
+70/14*4-5-15/3+6
+=16
+
+d.3 5 6*+13-18 2/+
+3+5*6-13+18/2
+=29
+…………………………………_………………………..,…………………………………………………………
+
+No2.
+a.AB+CD+*E-
+b.ABC+-D*E*F/
+c.AB+CD-/E+FG-*
+d.AB+CD+*E-F/G*H+
+…………………………………_………………………..,…………………………………………………………
+
+No3.
+a.A*B+C
+b.(A+B)*(C-D)
+(A-B-C)*(D)
+…………………………………_………………………..,…………………………………………………………
+
+No4.
+#include <iostream>
+#include <stack>
+
+bool isPrime(int num) {
+    if (num < 2) {
+        return false;
+    }
+    for (int i = 2; i * i <= num; ++i) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void primeFactorsStack(int n) {
+    std::stack<int> factorsStack;
+
+    for (int i = 2; i <= n; ++i) {
+        while (n % i == 0 && isPrime(i)) {
+            factorsStack.push(i);
+            n /= i;
+        }
+    }
+
+    while (!factorsStack.empty()) {
+        std::cout << factorsStack.top() << " ";
+        factorsStack.pop();
+    }
+}
+
+int main() {
+    int num;
+    std::cout << "Enter a positive integer: ";
+    std::cin >> num;
+
+    std::cout << "Prime factors in descending order: ";
+    primeFactorsStack(num);
+
+    return 0;
+}
+…………………………………_………………………..,…………………………………………………………
+
+No5.
+#include <iostream>
+#include <cmath>
+
+int binaryToDecimal(const std::string& binary) {
+    int decimal = 0;
+    int power = 0;
+
+    for (int i = binary.length() - 1; i >= 0; --i) {
+        if (binary[i] == '1') {
+            decimal += std::pow(2, power);
+        }
+        ++power;
+    }
+
+    return decimal;
+}
+
+int main() {
+    std::string binaryNumber;
+    std::cout << "Enter a binary number: ";
+    std::cin >> binaryNumber;
+
+    int decimalEquivalent = binaryToDecimal(binaryNumber);
+
+    std::cout << "Decimal equivalent: " << decimalEquivalent << std::endl;
+
+    return 0;
+}
+
+…………………………………_………………………..,…………………………………………………………
+No 6.
+#include <iostream>
+#include <stack>
+
+void decimalToBinary(int decimal) {
+    std::stack<int> binaryStack;
+
+    while (decimal > 0) {
+        binaryStack.push(decimal % 2);
+        decimal /= 2;
+    }
+
+    std::cout << "Binary equivalent: ";
+    while (!binaryStack.empty()) {
+        std::cout << binaryStack.top();
+        binaryStack.pop();
+    }
+}
+
+int main() {
+    int decimalNumber;
+    std::cout << "Enter a decimal number: ";
+    std::cin >> decimalNumber;
+
+    decimalToBinary(decimalNumber);
+
+    return 0;
+}
+
+…………………………………_………………………..,…………………………………………………………
+No 7.
+#include <iostream>
+#include <stack>
+#include <unordered_map>
+
+bool isOperator(char c) {
+    return (c == '+' || c == '-' || c == '*' || c == '/');
+}
+
+int precedence(char op) {
+    std::unordered_map<char, int> precedenceMap = {{'+', 1}, {'-', 1}, {'*', 2}, {'/', 2}};
+    return precedenceMap[op];
+}
+
+std::string infixToPostfix(const std::string& infix) {
+    std::stack<char> operatorStack;
+    std::string postfix;
+
+    for (char c : infix) {
+        if (std::isalnum(c)) {
+            postfix += c;
+        } else if (c == '(') {
+            operatorStack.push(c);
+        } else if (c == ')') {
+            while (!operatorStack.empty() && operatorStack.top() != '(') {
+                postfix += operatorStack.top();
+                operatorStack.pop();
+            }
+            operatorStack.pop();  // Pop '('
+        } else if (isOperator(c)) {
+            while (!operatorStack.empty() && precedence(c) <= precedence(operatorStack.top())) {
+                postfix += operatorStack.top();
+                operatorStack.pop();
+            }
+            operatorStack.push(c);
+        }
+    }
+
+    while (!operatorStack.empty()) {
+        postfix += operatorStack.top();
+        operatorStack.pop();
+    }
+
+    return postfix;
+}
+
+int main() {
+    std::string infixExpression;
+    std::cout << "Enter an infix expression: ";
+    std::getline(std::cin, infixExpression);
+
+    std::string postfixExpression = infixToPostfix(infixExpression);
+    std::cout << "Postfix expression: " << postfixExpression << std::endl;
+
+    return 0;
+}
+
+
+
+
+
